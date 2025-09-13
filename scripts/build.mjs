@@ -14,11 +14,10 @@ await rimraf('build')
 
 // Create build directory
 await mkdir('build', { recursive: true })
-await mkdir('build/src', { recursive: true })
 
 // Copy public files
 const publicDir = 'public'
-const buildPublicDir = 'build/public'
+const buildPublicDir = 'build'
 
 await mkdir(buildPublicDir, { recursive: true })
 
@@ -45,7 +44,7 @@ await copyPublicFiles(publicDir, buildPublicDir)
 await esbuild.build({
   entryPoints: ['src/main.tsx'],
   bundle: true,
-  outfile: 'build/src/bundle.js',
+  outfile: 'build/bundle.js',
   format: 'esm',
   minify: process.argv.includes('--production'),
   sourcemap: process.argv.includes('--production') ? false : 'external',
@@ -67,7 +66,7 @@ await esbuild.build({
     '.eot': 'file'
   },
   assetNames: 'assets/[name]-[hash]',
-  publicPath: 'build/src/'
+  publicPath: 'build/'
 })
 
 console.log('Build completed successfully!')
